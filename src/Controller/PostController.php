@@ -24,6 +24,8 @@ class PostController extends AbstractController
         
 		$form->handleRequest($request);
         
+		$slugify = new Slugify();
+		
 		if ($form->isSubmitted() && $form->isValid()) 
 		{
         
