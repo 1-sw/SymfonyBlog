@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Cocur\Slugify\Slugify;
 
+use App\Form;
+
 class PostController extends AbstractController
 {
 
