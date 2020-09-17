@@ -1,7 +1,8 @@
 services:
     _defaults:
-        autoconfigure: true 
-
+        autowire: true
+        autoconfigure: true
+        public: false
     App\:
         resource: '../src/*'
         exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
@@ -9,6 +10,7 @@ services:
     App\Controller\:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
+        
     Cocur\Slugify\Slugify:
         autowire: true
         
