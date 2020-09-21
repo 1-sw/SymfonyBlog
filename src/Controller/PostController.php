@@ -7,10 +7,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Cocur\Slugify\Slugify;
 use App\Form;
 
+/**
+ * @Route("/posts/new", name="post")
+ */
 class PostController extends AbstractController {
 
 	/**
-     * @Route("/posts/new", name="post")
+     * @Route("/new", name="new_post")
      */
     public function addPost(Request $request, Slugify $slugify) {
         $post = new Post(); #--- There is a problem

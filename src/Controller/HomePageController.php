@@ -1,13 +1,18 @@
 <?php
 
 namespace App\Controller;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
+
+/**
+ * @Route("/home", name="home_page")
+ */
 class HomePageController extends AbstractController 
 {
-    /**
-     * @Route("/home", name="home_page")
+	/**
+     * @Route("/", name="home_page")
      */
     public function index() 
 	{
