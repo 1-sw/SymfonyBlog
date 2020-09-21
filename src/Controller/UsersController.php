@@ -1,8 +1,8 @@
 <?php
+
 namespace App\Controller;
 
 use App\Entity\Users;
-use App\Entity\Post;
 use App\Repository\UsersRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,43 +16,40 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class UsersController extends AbstractController
 {
+
     private $usersRepository;
-	private $users;
-	private $postApi;
-	
+
     public function __construct(UsersRepository $usersRepository)
     {
         $this->usersRepository = $usersRepository;
     }
+
 	/**
-	 * @Route("/new")
-	 */
-	public function newUser(): Response
+     * @Route("/new", name="users", methods={"GET", "POST"})
+     */
+    public function addPost(Request $request, EntityManagerInterface $entityManager)
 	{
-		$this->users = new Users();
-		$this->postApi = new Post();
-		
-		$this->users
-		    ->setName(str_repeat('UserName', 1))
-            ->setPassword(str_repeat('asd123', 2))
-            ->setPostId(random_int(1, $this->postApi->getId))
-			->setCreatedAt(new \DateTime())
-			->setRole("ROLE_USER");
+	    $users = new Users();
+	    $users
+            ->setName('Foo')
+            ->setPassword(str_repeat('Qwerty',2))
+            ->setCreatedAt(new \DateTime())
+            ->setPostId(random_int(0,7))
+			->setRole('ROLE_USER');
 			
-		$entityManager->persist($this->users);
-		$entityManager->flush();
-		
-		return new Response($this->users->getId);
-	}
+	    $entityManager->persist($users);
+        $entityManager->flush();
 
+        return new Response($users->getId());
+    }
 
-	/**
-	 * @Route("")
+    /**
+     * @Route("", methods={"GET"})
      */
     public function users(): Response
     {
-        $this->users = $this->usersRepository->findAll();
-        dd($this->users);
+        $users = $this->usersRepository->findAll();
+        dd($users);
         return new Response();
     }
 }
