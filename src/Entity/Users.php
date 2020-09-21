@@ -18,11 +18,6 @@ class Users
     private $id;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $postId;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $name;

@@ -34,7 +34,6 @@ class UsersController extends AbstractController
             ->setName('Foo')
             ->setPassword(str_repeat('Qwerty',2))
             ->setCreatedAt(new \DateTime())
-            ->setPostId(random_int(0,7))
 			->setRole('ROLE_USER');
 			
 	    $entityManager->persist($users);
