@@ -49,9 +49,7 @@ class PostController extends AbstractController
     public function posts(): Response
     {
         $posts = $this->postRepository->findAll();
-
         dd($posts);
-
         return new Response();
     }
 }
