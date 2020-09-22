@@ -1,14 +1,14 @@
 <?php
 
 namespace App\Entity;
-
+use Symfony\Component\Security\Core\User\UserInterface;
 use App\Repository\UsersRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=UsersRepository::class)
  */
-class Users
+class Users implements UserInterface
 {
     /**
      * @ORM\Id
@@ -50,7 +50,6 @@ class Users
     public function setPostId(?int $postId): self
     {
         $this->postId = $postId;
-
         return $this;
     }
 
@@ -62,7 +61,6 @@ class Users
     public function setName(string $name): self
     {
         $this->name = $name;
-
         return $this;
     }
 
@@ -74,7 +72,6 @@ class Users
     public function setPassword(string $password): self
     {
         $this->password = $password;
-
         return $this;
     }
 
@@ -86,7 +83,6 @@ class Users
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
-
         return $this;
     }
 
@@ -98,7 +94,11 @@ class Users
     public function setRole(string $role): self
     {
         $this->role = $role;
-
         return $this;
     }
+	
+	public function getRoles() {}
+	public function getSalt() {}
+	public function getUsername() {}
+	public function eraseCredentials() {}
 }
