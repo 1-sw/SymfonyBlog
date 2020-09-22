@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Security\Core\User\UserInterface;
 use App\Repository\UsersRepository;
 use Doctrine\ORM\Mapping as ORM;
 
