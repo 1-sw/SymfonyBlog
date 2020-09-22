@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=UsersRepository::class)
  */
-class User implements UserInterface
+class Users implements UserInterface
 {
     /**
      * @ORM\Id
