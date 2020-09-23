@@ -22,19 +22,16 @@ use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
 
 class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface {
-    use TargetPathTrait;
 
-    public const LOGIN_ROUTE = 'app_login';
 
-    private $entityManager;
-    
+	use TargetPathTrait;
+	public const LOGIN_ROUTE = 'app_login';
+    	private $entityManager;
 	private $urlGenerator;
-    
 	private $csrfTokenManager;
-    
 	private $passwordEncoder;
 
-    public function __construct
+    	public function __construct
 	(
 		EntityManagerInterface $entityManager, 
 		UrlGeneratorInterface $urlGenerator, 
@@ -49,7 +46,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     public function supports(Request $request)
     {
-        return self::LOGIN_ROUTE === $request->attributes->get('_route')&& $request->isMethod('POST');
+        return self::LOGIN_ROUTE === $request->attributes->get('_route') && $request->isMethod('POST');
     }
 
     public function getCredentials(Request $request)
@@ -66,13 +63,16 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
         $token = new CsrfToken('authenticate', $credentials['csrf_token']);
-        if (!$this->csrfTokenManager->isTokenValid($token)) {
+        
+	if (!$this->csrfTokenManager->isTokenValid($token)) 
+	{
             throw new InvalidCsrfTokenException();
         }
 
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
 
-        if (!$user) {
+        if (!$user) 
+	{
             // fail authentication with a custom error
             throw new CustomUserMessageAuthenticationException('Email could not be found.');
         }
@@ -95,7 +95,8 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
+        if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) 
+	{
             return new RedirectResponse($targetPath);
         }
 
