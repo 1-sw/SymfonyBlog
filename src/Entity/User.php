@@ -30,7 +30,7 @@ class User implements UserInterface
     	/**
      	* @ORM\Column(type="string", length=255, nullable=true)
      	*/
-    	private $mail;
+    	private $email;
 
  
     	public function getId(): ?int
@@ -62,14 +62,14 @@ class User implements UserInterface
         	return $this;
 	}
 
-    	public function getMail(): ?string
+    	public function getEmail(): ?string
     	{
-        	return $this->mail;
+        	return $this->email;
 	}
 
-    	public function setMail(?string $mail): self
+    	public function setEmail(?string $email): self
     	{
-	        $this->mail = $mail;
+	        $this->email = $email;
 
         	return $this;
    	}
