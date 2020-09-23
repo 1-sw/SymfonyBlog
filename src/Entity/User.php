@@ -46,7 +46,6 @@ class User implements UserInterface
     	public function setName(string $name): self
     	{
         	$this->name = $name;
-
        		return $this;
     	}
 
@@ -58,7 +57,6 @@ class User implements UserInterface
     	public function setPassword(string $password): self
     	{
         	$this->password = $password;
-
         	return $this;
 	}
 
@@ -70,11 +68,16 @@ class User implements UserInterface
     	public function setEmail(?string $email): self
     	{
 	        $this->email = $email;
-
         	return $this;
    	}
-	public function getSalt(){}
+
+	public function getSalt()
+	{
+	/* I use bcrypt, so this method steel blanked */
+	}
 	public function getUsername(){}
 	public function eraseCredentials(){}
 	public function getRoles(){}
+
+
 }
