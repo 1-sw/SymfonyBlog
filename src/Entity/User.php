@@ -75,8 +75,11 @@ class User implements UserInterface
 	{
 	/* I use bcrypt, so this method steel blanked */
 	}
+
 	public function getUsername(){}
+
 	public function eraseCredentials(){}
+
 	public function getRoles(){}
 
 
