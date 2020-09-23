@@ -51,6 +51,7 @@ class Post
     public function setTitle(string $title): self
     {
         $this->title = $title;
+
         return $this;
     }
 
@@ -62,6 +63,7 @@ class Post
     public function setContent(string $content): self
     {
         $this->content = $content;
+
         return $this;
     }
 
@@ -73,6 +75,7 @@ class Post
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
         return $this;
     }
 
@@ -84,6 +87,7 @@ class Post
     public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
         return $this;
     }
 }
