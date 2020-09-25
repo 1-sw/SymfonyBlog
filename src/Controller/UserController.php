@@ -34,7 +34,7 @@ class UserController extends AbstractController
 	    $user
             ->setName(str_repeat('Qwerty',1))
             ->setPassword(str_repeat('Q123werty',2))
-            ->setMail(str_repeat('Q@example',1));
+            ->setEmail(str_repeat('Q@example',1));
 
 	    $entityManager->persist($user);
         $entityManager->flush();
