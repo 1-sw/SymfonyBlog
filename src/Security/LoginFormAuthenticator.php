@@ -21,7 +21,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 	public function __construct
 	(
 		UserRepository $userRepository, 
-		RouterInterface $router, CsrfTokenManagerInterface $csrfTokenManager, 				UserPasswordEncoderInterface $passwordEncoder
+		RouterInterface $router, CsrfTokenManagerInterface $csrfTokenManager, 					UserPasswordEncoderInterface $passwordEncoder
 	){
         	$this->userRepository = $userRepository;
         	$this->router = $router;
@@ -40,7 +40,8 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     	{
         	$credentials = [
             		'email' => $request->request->get('email'),
-            		'password' => $request->request->get('password'),
+            		/* 'password' => $request->request->get('password') */
+			'password' => $encoder->encodePassword($user->getPlainPassword(), $user->getSalt()),
             		'csrf_token' => $request->request->get('_csrf_token'),
         	];
 
