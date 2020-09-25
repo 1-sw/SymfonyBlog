@@ -1,4 +1,7 @@
 security:
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
     providers:
         users_in_memory: { memory: null }
     firewalls:
