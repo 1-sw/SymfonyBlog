@@ -17,40 +17,36 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class UserController extends AbstractController
 {
-
-    private $userRepository;
-
-    public function __construct(UserRepository $userRepository)
-    {
-        $this->userRepository = $userRepository;
-    }
+	private $userRepository;
+    	public function __construct(UserRepository $userRepository)
+    	{
+        	$this->userRepository = $userRepository;
+    	}
 
 	/**
-     * @Route("/new", name="post", methods={"GET", "POST"})
-     */
-    public function addPost(Request $request, EntityManagerInterface $entityManager)
-    {
-	    $user = new User();
-	    $user
-            ->setName(str_repeat('Qwerty',1))
-            ->setPassword(str_repeat('Q123werty',2))
-            ->setEmail(str_repeat('Q@example',1));
+     	* @Route("/new", name="post", methods={"GET", "POST"})
+     	*/
+    	public function addPost(Request $request, EntityManagerInterface $entityManager)
+    	{
+		$user = new User();
+	    	$user
+            		->setName(str_repeat('Qwerty',1))
+            		->setPassword(str_repeat('Q123werty',2))
+            		->setEmail(str_repeat('Q@example',1));
 
-	    $entityManager->persist($user);
-        $entityManager->flush();
+	    	$entityManager->persist($user);
+        	$entityManager->flush();
+        	return new Response($user->getId());
+    	}
 
-        return new Response($user->getId());
-    }
+    	/**
+     	* @Route("", methods={"GET"})
+     	*/
+    	public function users(): Response
+    	{
+        	$users = $this->userRepository->findAll();
 
-    /**
-     * @Route("", methods={"GET"})
-     */
-    public function users(): Response
-    {
-        $users = $this->userRepository->findAll();
-
-        dd($users);
-
-        return new Response();
-    }
+        	dd($users);
+        	return new Response();
+    	}
 }
