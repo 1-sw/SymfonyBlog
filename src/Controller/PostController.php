@@ -1,15 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
-use App\Entity\Post;
-use App\Form\PostType;
+use App\Manager\PostManager;
+use App\Model\Request\PostRequest;
 use App\Repository\PostRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 
 /**
@@ -26,21 +31,28 @@ class PostController extends AbstractController
     }
 
 	/**
-     * @Route("/new", name="post", methods={"GET", "POST"})
+     * @Route("", methods={"POST"})
      */
-    public function addPost(Request $request, EntityManagerInterface $entityManager)
-	{
-	    $post = new Post();
-	    $post
-            ->setTitle(str_repeat('Qwerty', 10))
-            ->setContent(str_repeat('Qwerty', 100))
-            ->setCreatedAt(new \DateTime())
-            ->setUpdatedAt(new \DateTime());
+    public function create(
+        Request $request,
+        PostManager $postManager,
+        SerializerInterface $serializer,
+        ValidatorInterface $validator
+    ): JsonResponse {
+	    $json = $request->getContent();
 
-	    $entityManager->persist($post);
-        $entityManager->flush();
+	    $body = json_decode($json, true);
 
-        return new Response($post->getId());
+	    $postRequest = (new PostRequest())
+            ->setContent($body['content'])
+            ->setTitle($body['title']);
+
+//        $postRequest = $serializer->deserialize($json, PostRequest::class, 'json');
+//        $validator->validate($postRequest);
+
+        $postResponse = $postManager->create($postRequest);
+
+	    return new JsonResponse($postResponse, Response::HTTP_CREATED);
     }
 
     /**
