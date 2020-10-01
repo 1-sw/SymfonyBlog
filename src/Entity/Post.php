@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\PostRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
@@ -16,6 +17,8 @@ class Post
      	* @ORM\Id
      	* @ORM\GeneratedValue
      	* @ORM\Column(type="integer")
+	* @Assert\NotBlank
+	* @Assert\NotNull
      	*/
     	private $id;
 
