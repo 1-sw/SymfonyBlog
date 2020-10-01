@@ -41,11 +41,17 @@ class Post
 
      	/**
       	 * @ORM\Column(type="datetime")
+	 * @Assert\NotBlank
+	 * @Assert\NotNull
+	 * @Assert\DateTime
    	 */
     	private $createdAt;
 
     	/**
      	 * @ORM\Column(type="datetime")
+	 * @Assert\NotBlank
+	 * @Assert\NotNull
+	 * @Assert\DateTime
      	 */
     	private $updatedAt;
 
