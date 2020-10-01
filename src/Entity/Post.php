@@ -55,12 +55,12 @@ class Post
      	 */
     	private $updatedAt;
 
-    	public function getId(): ?int
+    	public function getId()
     	{
         	return $this->id;
     	}
 
-    	public function getTitle(): ?string
+    	public function getTitle()
     	{
         	return $this->title;
     	}
@@ -71,7 +71,7 @@ class Post
         	return $this;
    	}
 
-   	public function getContent(): ?string
+   	public function getContent()
     	{
      		return $this->content;
     	}
