@@ -29,8 +29,8 @@ class PostController extends AbstractController
         	$this->postRepository = $postRepository;
     	}
     	/**
-     	* @Route("", methods={"POST"})
-     	*/
+     	 * @Route("", methods={"POST"})
+     	 */
     	public function create(Request $request,PostManager $postManager,SerializerInterface $serializer, ValidatorInterface $validator): JsonResponse 
 	{
 		$json = $request->getContent();
@@ -46,8 +46,8 @@ class PostController extends AbstractController
     	}
 
     	/**
-     	* @Route("", methods={"GET"})
-     	*/
+     	 * @Route("", methods={"GET"})
+     	 */
     	public function posts(): Response
     	{
         	$posts = $this->postRepository->findAll();
