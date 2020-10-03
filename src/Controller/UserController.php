@@ -29,7 +29,7 @@ class UserController extends AbstractController
 		$json = $request->getContent();
 	    	$body = json_decode($json, true);
 	    	$userRequest = (new UserRequest())->setName($body['content']);
-	    	//$postRequest = $serializer->deserialize($json, PostRequest::class, 'json');
+	    	//$postRequest = $serializer->deserialize($json, UserRequest::class, 'json');
 	    	$validator->validate($userRequest);
             	$userResponse = $userManager->create($userRequest);
 	    	return new JsonResponse($userResponse, Response::HTTP_CREATED);
