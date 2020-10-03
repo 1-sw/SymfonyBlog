@@ -1,14 +1,19 @@
 <?php
 
+
+
 namespace App\Controller;
-use App\Entity\User;
-use App\Form\PostType;
+use App\Manager\UserManager;
+use App\Model\Request\UserRequest;
 use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration;
 
 /**
  * @Route("/users")
@@ -28,7 +33,10 @@ class UserController extends AbstractController
 	{
 		$json = $request->getContent();
 	    	$body = json_decode($json, true);
-	    	$userRequest = (new UserRequest())->setName($body['content']);
+	    	$userRequest = (new UserRequest())
+			->setName($body['name'])
+			->setPassword($body['password'])
+			->setEmail($body['email']);
 	    	//$postRequest = $serializer->deserialize($json, UserRequest::class, 'json');
 	    	$validator->validate($userRequest);
             	$userResponse = $userManager->create($userRequest);

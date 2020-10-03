@@ -22,6 +22,16 @@ class UserResponse implements \JsonSerializable
     	protected $createdAt;
 
     	/**
+     	* @var email
+     	*/
+    	protected $email;
+
+    	/**
+     	* @var password
+     	*/
+    	protected $password;
+
+    	/**
      	* @var string
      	*/
     	protected $updatedAt;
@@ -76,4 +86,30 @@ class UserResponse implements \JsonSerializable
     	{
         	return get_object_vars($this);
     	}
+
+
+
+    	public function getPassword()
+   	{
+        	return $this->password;
+    	}
+
+    	public function setPassword(string $password): self
+    	{
+        	$this->password = $password;
+        	return $this;
+    	}
+
+    	public function getEmail()
+   	{
+        	return $this->email;
+    	}
+
+    	public function setEmail(string $email): self
+    	{
+        	$this->email = $email;
+        	return $this;
+    	}
+
+
 }

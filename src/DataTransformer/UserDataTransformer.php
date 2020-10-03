@@ -12,6 +12,8 @@ class UserDataTransformer
     	{
         	return (new User())
             		->setName($userRequest->getName())
+            		->setEmail($userRequest->getEmail())
+            		->setPassword($userRequest->getPassword())
             		->setCreatedAt(new \DateTime())
             		->setUpdatedAt(new \DateTime());
     	}
@@ -21,6 +23,8 @@ class UserDataTransformer
         	return (new UserResponse())
             		->setId($user->getId())
             		->setName($user->getName())
+            		->setEmail($user->getEmail())
+            		->setPassword($user->getPassword())
             		->setCreatedAt($user->getCreatedAt()->format('Y-m-d H:i:s'))
             		->setUpdatedAt($user->getUpdatedAt()->format('Y-m-d H:i:s'));
     	}
