@@ -21,20 +21,18 @@ class UserController extends AbstractController
         	$this->userRepository = $userRepository;
     	}
 
-	/**
-     	* @Route("/new", name="post", methods={"GET", "POST"})
-     	*/
-    	public function addPost(Request $request, EntityManagerInterface $entityManager)
-    	{
-		$user = new User();
-	    	$user
-            		->setName(str_repeat('Qwerty',1))
-            		->setPassword(str_repeat('Q123werty',2))
-            		->setEmail(str_repeat('Q@example',1));
-
-	    	$entityManager->persist($user);
-        	$entityManager->flush();
-        	return new Response($user->getId());
+    	/**
+     	 * @Route("", methods={"POST"})
+     	 */
+    	public function create(Request $request,UserManager $userManager,SerializerInterface $serializer, ValidatorInterface $validator): JsonResponse 
+	{
+		$json = $request->getContent();
+	    	$body = json_decode($json, true);
+	    	$userRequest = (new UserRequest())->setName($body['content']);
+	    	//$postRequest = $serializer->deserialize($json, PostRequest::class, 'json');
+	    	$validator->validate($userRequest);
+            	$userResponse = $userManager->create($userRequest);
+	    	return new JsonResponse($userResponse, Response::HTTP_CREATED);
     	}
 
     	/**
