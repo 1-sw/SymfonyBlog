@@ -14,8 +14,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
 /**
-* @Route("/users")
-*/
+ * @Route("/users")
+ */
 class UserController extends AbstractController
 {
 	private $userRepository;
@@ -25,8 +25,8 @@ class UserController extends AbstractController
     	}
 
     	/**
-    	* @Route("", methods={"POST"})
-    	*/
+    	 * @Route("", methods={"POST"})
+     	 */
     	public function create(Request $request,UserManager $userManager,SerializerInterface $serializer, ValidatorInterface $validator): JsonResponse 
 	{
 		$json = $request->getContent();
@@ -48,8 +48,8 @@ class UserController extends AbstractController
     	}
 
     	/**
-     	* @Route("", methods={"GET"})
-     	*/
+     	 * @Route("", methods={"GET"})
+     	 */
     	public function users(): Response
     	{
         	$users = $this->userRepository->findAll();
