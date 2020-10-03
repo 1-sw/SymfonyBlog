@@ -1,6 +1,6 @@
 <?php
 
-
+// Строчка показывает
 namespace App\Manager;
 
 use App\DataTransformer\PostDataTransformer;
