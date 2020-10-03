@@ -1,12 +1,10 @@
 <?php
 
-// Строчка показывает
 namespace App\Manager;
-
-use App\DataTransformer\PostDataTransformer;
 use App\Model\Request\PostRequest;
 use App\Model\Response\PostResponse;
 use Doctrine\ORM\EntityManagerInterface;
+use App\DataTransformer\PostDataTransformer;
 
 class PostManager
 {
