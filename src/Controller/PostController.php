@@ -37,7 +37,7 @@ class PostController extends AbstractController
             		->setContent($body['content'])
             		->setTitle($body['title']);
 
-	    	//$postRequest = $serializer->deserialize($json, PostRequest::class, 'json');
+	    	$postRequest = $serializer->deserialize($json, PostRequest::class, 'json');
 	    	$validator->validate($postRequest);
             	$postResponse = $postManager->create($postRequest);
 	    	return new JsonResponse($postResponse, Response::HTTP_CREATED);
