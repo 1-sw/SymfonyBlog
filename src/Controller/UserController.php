@@ -38,10 +38,8 @@ class UserController extends AbstractController
 
 
 
-		//This featchure is must have in new version ans paramconverter to
-	    	//$postRequest = $serializer->deserialize($json, UserRequest::class, 'json');
-
-
+		//This featchure is available in new version ans paramconverter to
+	    	$userRequest = $serializer->deserialize($json, UserRequest::class, 'json');
 	    	$validator->validate($userRequest);
             	$userResponse = $userManager->create($userRequest);
 	    	return new JsonResponse($userResponse, Response::HTTP_CREATED);
