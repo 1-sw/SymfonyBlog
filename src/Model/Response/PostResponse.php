@@ -33,7 +33,7 @@ class PostResponse implements \JsonSerializable
     	protected $updatedAt;
 
     	public function getId(): int
-   	{
+   		{
         	return $this->id;
     	}
 
@@ -44,7 +44,7 @@ class PostResponse implements \JsonSerializable
     	}
 
     	public function getTitle(): ?string
-   	{
+   		{
         	return $this->title;
     	}
 
@@ -52,7 +52,7 @@ class PostResponse implements \JsonSerializable
     	{
         	$this->title = $title;
         	return $this;
-   	}
+   		}
 
     	public function getContent(): ?string
     	{
@@ -68,7 +68,7 @@ class PostResponse implements \JsonSerializable
     	public function getCreatedAt(): string
     	{
         	return $this->createdAt;
-   	}
+   		}
 
     	public function setCreatedAt(string $createdAt): self
     	{

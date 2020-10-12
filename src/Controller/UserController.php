@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 
 /**
@@ -26,6 +27,7 @@ class UserController extends AbstractController
 
     	/**
     	 * @Route("", methods={"POST"})
+		 * 
      	 */
     	public function create(Request $request,UserManager $userManager,SerializerInterface $serializer, ValidatorInterface $validator): JsonResponse 
 	{
