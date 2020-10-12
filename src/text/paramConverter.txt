@@ -1,1 +1,10 @@
-Анализ: https://blog.eleven-labs.com/en/custom-paramconverter/
+Анализ: 
+
+https://blog.eleven-labs.com/en/custom-paramconverter/
+https://www.thetopsites.net/article/50468826.shtml
+
+1. Первое и самое важное, это то, что мы должны подключить класс
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+2. Далее, конвертор преобразовывает сущности от клиента в сущности пхп
+соотвественно, синтаксис аннотации для парамконвертатора будет такой:
+@ParamConverter(имя сущности, класс::пхп_свойство);

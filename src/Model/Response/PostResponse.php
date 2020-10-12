@@ -3,6 +3,7 @@
 namespace App\Model\Response;
 
 use DateTimeInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class PostResponse implements \JsonSerializable
 {

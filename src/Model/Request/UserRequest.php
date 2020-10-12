@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Model\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class UserRequest
 {

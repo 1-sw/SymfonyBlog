@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Model\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class PostRequest
 {
-	/**
-     	* @var string|null
-     	*/
+		/**
+		 * @var string|null
+		 * 
+     	 */
     	protected $title;
 
     	/**
