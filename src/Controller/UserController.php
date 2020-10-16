@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Controller;
+
 use App\Manager\UserManager;
 use App\Model\Request\UserRequest;
 use App\Repository\UserRepository;
@@ -20,41 +22,41 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 class UserController extends AbstractController
 {
 	private $userRepository;
-    	public function __construct(UserRepository $userRepository)
-    	{
-        	$this->userRepository = $userRepository;
-    	}
+	public function __construct(UserRepository $userRepository)
+	{
+		$this->userRepository = $userRepository;
+	}
 
-    	/**
-    	 * @Route("", methods={"POST"})
-		 * 
-     	 */
-    	public function create(Request $request,UserManager $userManager,SerializerInterface $serializer, ValidatorInterface $validator): JsonResponse 
+	/**
+	 * @Route("", methods={"POST"})
+	 * 
+	 */
+	public function create(Request $request, UserManager $userManager, SerializerInterface $serializer, ValidatorInterface $validator): JsonResponse
 	{
 		$json = $request->getContent();
-	    	$body = json_decode($json, true);
-	    	$userRequest = (new UserRequest())
+		$body = json_decode($json, true);
+		$userRequest = (new UserRequest())
 			->setName($body['name'])             //json responce here. but if i will use password i should
 			->setPassword($body['password'])     //use salt and some crypt (if default mechanism willnt work)
- 			->setEmail($body['email']);          //i dont think that current version realy need this
+			->setEmail($body['email']);          //i dont think that current version realy need this
 
 
 
 		//This featchure is available in new version ans paramconverter to
-	    	$userRequest = $serializer->deserialize($json, UserRequest::class, 'json');
-	    	$validator->validate($userRequest);
-            	$userResponse = $userManager->create($userRequest);
-	    	return new JsonResponse($userResponse, Response::HTTP_CREATED);
-    	}
+		$userRequest = $serializer->deserialize($json, UserRequest::class, 'json');
+		$validator->validate($userRequest);
+		$userResponse = $userManager->create($userRequest);
+		return new JsonResponse($userResponse, Response::HTTP_CREATED);
+	}
 
-    	/**
-     	 * @Route("", methods={"GET"})
-     	 */
-    	public function users(): Response
-    	{
-        	$users = $this->userRepository->findAll();
+	/**
+	 * @Route("", methods={"GET"})
+	 */
+	public function users(): Response
+	{
+		$users = $this->userRepository->findAll();
 
-        	dd($users);
-        	return new Response();
-    	}
+		dd($users);
+		return new Response();
+	}
 }
