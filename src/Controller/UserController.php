@@ -6,7 +6,7 @@ use App\Manager\UserManager;
 
 use App\Model\Request\UserRequest;
 use App\Repository\UserRepository;
-
+use CustomParConv;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -19,6 +19,9 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
+include __DIR__ . "..\CustomParConv.php";
+
+$pm = new CustomParConv();
 
 /**
  * @Route("/users")
@@ -37,6 +40,8 @@ class UserController extends AbstractController
 	 */
 	public function create(Request $request, UserManager $userManager, SerializerInterface $serializer, ValidatorInterface $validator): JsonResponse
 	{
+
+
 		$json = $request->getContent();
 		$body = json_decode($json, true);
 		$userRequest = (new UserRequest())
