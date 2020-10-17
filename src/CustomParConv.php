@@ -16,8 +16,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 class CustomParConv
 {
-    private $userRepository;
-    private $userManager;
+    private $repository;
+    private $manager;
     private $iUserSerializer;
     private $iUserValidator;
 
@@ -59,7 +59,7 @@ class CustomParConv
 
             $this->iUserValidator->validate($postRequest);
 
-            $postResponse = $this->userManager->create($postRequest);
+            $postResponse = $this->manager->create($postRequest);
 
             return new JsonResponse($postResponse, Response::HTTP_CREATED);
         }
@@ -67,14 +67,13 @@ class CustomParConv
 
     public function setRepository($data)
     {
-        return $this->userRepository = $data;
+        return $this->repository = $data;
     }
 
     public function setManager($data)
     {
-        return $this->userManager = $data;
+        return $this->manager = $data;
     }
-
 
     public function setSerializerI($data)
     {
@@ -86,12 +85,9 @@ class CustomParConv
         return $this->iUserValidator = $data;
     }
 
-
-
     public function showUsers(): Response
     {
-        $users = $this->userRepository->findAll();
-
+        $users = $this->repository->findAll();
         dd($users);
         return new Response();
     }
