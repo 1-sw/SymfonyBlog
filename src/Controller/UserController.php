@@ -4,15 +4,13 @@ namespace App\Controller;
 
 require_once __DIR__ . '\..\..\vendor\autoload.php';
 
-
-
 use Plugins\CustomParConv;
 
 use App\Manager\UserManager;
 use App\Model\Request\UserRequest;
 use App\Repository\UserRepository;
-
 use Symfony\Component\HttpFoundation\Request;
+
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -29,39 +27,24 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class UserController extends AbstractController
 {
-	private $userRepository;
-	private $customParamConverter;
+	private $paramConverter;
 
-	public function __construct(UserRepository $userRepository)
+	public function __construct(UserRepository $userRepository, UserManager $userManager, SerializerInterface $sI, ValidatorInterface $vI)
 	{
-		$this->userRepository = $userRepository;
+		$this->paramConverter = new CustomParConv();
+		$this->paramConverter->setRepository($userRepository);
+		$this->paramConverter->setManager($userManager);
+		$this->paramConverter->setSerializerI($sI);
+		$this->paramConverter->setValidatorI($vI);
 	}
+
 
 	/**
 	 * @Route("", methods={"POST"})
-	 * 
 	 */
-	public function create(Request $request, UserManager $userManager, SerializerInterface $serializer, ValidatorInterface $validator): JsonResponse
+	public function create()
 	{
-
-
-		$this->customParamConverter = new CustomParConv();
-		$this->customParamConverter->validate();
-
-		$json = $request->getContent();
-		$body = json_decode($json, true);
-		$userRequest = (new UserRequest())
-			->setName($body['name'])             //json responce here. but if i will use password i should
-			->setPassword($body['password'])     //use salt and some crypt (if default mechanism willnt work)
-			->setEmail($body['email']);          //i dont think that current version realy need this
-
-
-
-		//This featchure is available in new version ans paramconverter to
-		$userRequest = $serializer->deserialize($json, UserRequest::class, 'json');
-		$validator->validate($userRequest);
-		$userResponse = $userManager->create($userRequest);
-		return new JsonResponse($userResponse, Response::HTTP_CREATED);
+		return $this->paramConverter->convert();
 	}
 
 	/**
@@ -69,9 +52,7 @@ class UserController extends AbstractController
 	 */
 	public function users(): Response
 	{
-		$users = $this->userRepository->findAll();
-
-		dd($users);
+		$this->paramConverter->showUsers();
 		return new Response();
 	}
 }
