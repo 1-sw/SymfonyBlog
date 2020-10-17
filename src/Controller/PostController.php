@@ -54,7 +54,7 @@ class PostController extends AbstractController
 	 */
 	public function posts(): Response
 	{
-		$this->paramConverter->showUsers();
+		$this->paramConverter->showResultDB();
 		return new Response();
 	}
 }

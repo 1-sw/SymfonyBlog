@@ -43,7 +43,7 @@ class UserController extends AbstractController
 	 */
 	public function users(): Response
 	{
-		$this->paramConverter->showUsers();
+		$this->paramConverter->showResultDB();
 		return new Response();
 	}
 }

@@ -85,10 +85,10 @@ class CustomParConv
         return $this->iUserValidator = $data;
     }
 
-    public function showUsers(): Response
+    public function showResultDB(): Response
     {
-        $users = $this->repository->findAll();
-        dd($users);
+        $result = $this->repository->findAll();
+        dd($result);
         return new Response();
     }
 }
