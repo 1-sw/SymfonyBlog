@@ -2,26 +2,27 @@
 
 namespace App\Controller;
 
-use App\Manager\UserManager;
+require_once __DIR__ . '\..\..\vendor\autoload.php';
 
+
+
+use Plugins\CustomParConv;
+
+use App\Manager\UserManager;
 use App\Model\Request\UserRequest;
 use App\Repository\UserRepository;
-use CustomParConv;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
 use Symfony\Component\Routing\Annotation\Route;
+
 use Symfony\Component\HttpFoundation\JsonResponse;
-
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
-include __DIR__ . "..\CustomParConv.php";
-
-$pm = new CustomParConv();
 
 /**
  * @Route("/users")
@@ -29,6 +30,8 @@ $pm = new CustomParConv();
 class UserController extends AbstractController
 {
 	private $userRepository;
+	private $customParamConverter;
+
 	public function __construct(UserRepository $userRepository)
 	{
 		$this->userRepository = $userRepository;
@@ -41,6 +44,9 @@ class UserController extends AbstractController
 	public function create(Request $request, UserManager $userManager, SerializerInterface $serializer, ValidatorInterface $validator): JsonResponse
 	{
 
+
+		$this->customParamConverter = new CustomParConv();
+		$this->customParamConverter->validate();
 
 		$json = $request->getContent();
 		$body = json_decode($json, true);

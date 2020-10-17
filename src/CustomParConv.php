@@ -1,4 +1,7 @@
 <?php
+
+namespace Plugins;
+
 class CustomParConv
 {
     public function convert()
