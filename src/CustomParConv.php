@@ -44,7 +44,7 @@ class CustomParConv
             $userRequest = $this->iUserSerializer->deserialize($json, UserRequest::class, 'json');
             $this->iUserValidator->validate($userRequest);
 
-            $userResponse = $this->userManager->create($userRequest);
+            $userResponse = $this->manager->create($userRequest);
 
             return new JsonResponse($userResponse, Response::HTTP_CREATED);
         } else if ($type === "post") {
