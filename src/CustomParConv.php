@@ -2,20 +2,12 @@
 
 namespace Plugins;
 
-
-
-use App\Manager\UserManager;
+use App\Model\Request\PostRequest;
 use App\Model\Request\UserRequest;
-use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
-
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Serializer\SerializerInterface;
-
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 
 
@@ -34,25 +26,43 @@ class CustomParConv
      * @Route("", methods={"POST"})
      * 
      */
-    public function convert(): JsonResponse
+    public function convert(string $type): JsonResponse
     {
 
-        $request = new Request();
 
-        $json = $request->getContent();
-        $body = json_decode($json, true);
-        $userRequest = (new UserRequest())
-            ->setName($body['name'])
-            ->setPassword($body['password'])
-            ->setEmail($body['email']);
+        if ($type === "user") {
+            $request = new Request();
+
+            $json = $request->getContent();
+            $body = json_decode($json, true);
+            $userRequest = (new UserRequest())
+                ->setName($body['name'])
+                ->setPassword($body['password'])
+                ->setEmail($body['email']);
 
 
-        $userRequest = $this->iUserSerializer->deserialize($json, UserRequest::class, 'json');
-        $this->iUserValidator->validate($userRequest);
+            $userRequest = $this->iUserSerializer->deserialize($json, UserRequest::class, 'json');
+            $this->iUserValidator->validate($userRequest);
 
-        $userResponse = $this->userManager->create($userRequest);
+            $userResponse = $this->userManager->create($userRequest);
 
-        return new JsonResponse($userResponse, Response::HTTP_CREATED);
+            return new JsonResponse($userResponse, Response::HTTP_CREATED);
+        } else if ($type === "post") {
+            $request = new Request();
+
+            $json = $request->getContent();
+            $body = json_decode($json, true);
+
+            $postRequest = (new PostRequest())->setContent($body['content'])->setTitle($body['title']);
+
+            $postRequest = $this->iUserSerializer->deserialize($json, PostRequest::class, 'json');
+
+            $this->iUserValidator->validate($postRequest);
+
+            $postResponse = $this->userManager->create($postRequest);
+
+            return new JsonResponse($postResponse, Response::HTTP_CREATED);
+        }
     }
 
     public function setRepository($data)

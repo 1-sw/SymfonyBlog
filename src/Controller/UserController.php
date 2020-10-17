@@ -2,21 +2,12 @@
 
 namespace App\Controller;
 
-require_once __DIR__ . '\..\..\vendor\autoload.php';
-
 use Plugins\CustomParConv;
-
 use App\Manager\UserManager;
-use App\Model\Request\UserRequest;
 use App\Repository\UserRepository;
-use Symfony\Component\HttpFoundation\Request;
-
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
-
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -44,7 +35,7 @@ class UserController extends AbstractController
 	 */
 	public function create()
 	{
-		return $this->paramConverter->convert();
+		return $this->paramConverter->convert("user");
 	}
 
 	/**

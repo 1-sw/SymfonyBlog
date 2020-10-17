@@ -13,13 +13,12 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Plugins;
+use Plugins\CustomParConv;
 use App\Manager\PostManager;
-use App\Model\Request\PostRequest;
 use App\Repository\PostRepository;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,23 +29,24 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class PostController extends AbstractController
 {
 	private $postRepository;
-
-	public function __construct(PostRepository $postRepository)
+	private $paramConverter;
+	public function __construct(PostRepository $postRepository, PostManager $postManager, SerializerInterface $sI, ValidatorInterface $vI)
 	{
 		$this->postRepository = $postRepository;
+		$this->paramConverter = new CustomParConv();
+		$this->paramConverter->setRepository($this->postRepository);
+		$this->paramConverter->setManager($postManager);
+		$this->paramConverter->setSerializerI($sI);
+		$this->paramConverter->setValidatorI($vI);
 	}
+
+
 	/**
 	 * @Route("", methods={"POST"})
 	 */
-	public function create(Request $request, PostManager $postManager, SerializerInterface $serializer, ValidatorInterface $validator): JsonResponse
+	public function create()
 	{
-		$json = $request->getContent();
-		$body = json_decode($json, true);
-		$postRequest = (new PostRequest())->setContent($body['content'])->setTitle($body['title']);
-		$postRequest = $serializer->deserialize($json, PostRequest::class, 'json');
-		$validator->validate($postRequest);
-		$postResponse = $postManager->create($postRequest);
-		return new JsonResponse($postResponse, Response::HTTP_CREATED);
+		return $this->paramConverter->convert("post");
 	}
 
 	/**
@@ -54,8 +54,7 @@ class PostController extends AbstractController
 	 */
 	public function posts(): Response
 	{
-		$posts = $this->postRepository->findAll();
-		dd($posts);
+		$this->paramConverter->showUsers();
 		return new Response();
 	}
 }
