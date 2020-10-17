@@ -18,9 +18,11 @@ class CustomParConv
 {
     private $repository;
     private $manager;
-    private $iUserSerializer;
-    private $iUserValidator;
-
+    private $iSerializer;
+    private $iValidator;
+    private $json;
+    private $request;
+    private $body;
 
     /**
      * @Route("", methods={"POST"})
@@ -29,35 +31,33 @@ class CustomParConv
     public function convert(string $type): JsonResponse
     {
 
+        $this->request = new Request();
+        $this->json = $this->request->getContent();
+        $this->body = json_decode($this->json, true);
 
         if ($type === "user") {
-            $request = new Request();
 
-            $json = $request->getContent();
-            $body = json_decode($json, true);
+            $body = json_decode($this->json, true);
             $userRequest = (new UserRequest())
                 ->setName($body['name'])
                 ->setPassword($body['password'])
                 ->setEmail($body['email']);
 
 
-            $userRequest = $this->iUserSerializer->deserialize($json, UserRequest::class, 'json');
-            $this->iUserValidator->validate($userRequest);
+            $userRequest = $this->iSerializer->deserialize($this->json, UserRequest::class, 'json');
+            $this->iValidator->validate($userRequest);
 
             $userResponse = $this->manager->create($userRequest);
 
             return new JsonResponse($userResponse, Response::HTTP_CREATED);
         } else if ($type === "post") {
-            $request = new Request();
 
-            $json = $request->getContent();
-            $body = json_decode($json, true);
 
-            $postRequest = (new PostRequest())->setContent($body['content'])->setTitle($body['title']);
+            $postRequest = (new PostRequest())->setContent($this->body['content'])->setTitle($this->body['title']);
 
-            $postRequest = $this->iUserSerializer->deserialize($json, PostRequest::class, 'json');
+            $postRequest = $this->iSerializer->deserialize($this->json, PostRequest::class, 'json');
 
-            $this->iUserValidator->validate($postRequest);
+            $this->iValidator->validate($postRequest);
 
             $postResponse = $this->manager->create($postRequest);
 
@@ -77,12 +77,12 @@ class CustomParConv
 
     public function setSerializerI($data)
     {
-        return $this->iUserSerializer = $data;
+        return $this->iSerializer = $data;
     }
 
     public function setValidatorI($data)
     {
-        return $this->iUserValidator = $data;
+        return $this->iValidator = $data;
     }
 
     public function showResultDB(): Response
