@@ -24,21 +24,18 @@ class CustomParConv implements ParamConverterInterface
     private $request;
     private $conf;
 
-    /**
-     * @Route("", methods={"POST"})
-     * 
-     */
-
     public function supports(ParamConverter $configuration)
     {
     }
 
     public function apply(Request $request, ParamConverter $configuration)
     {
-        $this->conf = $configuration;
     }
 
 
+    /**
+     * @Route("", methods={"POST"}) 
+     */
     public function convert(string $type): JsonResponse
     {
         $this->request = new Request();
@@ -82,7 +79,6 @@ class CustomParConv implements ParamConverterInterface
     public function showResultDB(): Response
     {
         $result = $this->repository->findAll();
-        var_dump($this->conf);
         dd($result);
         return new Response();
     }
