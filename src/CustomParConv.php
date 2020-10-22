@@ -8,13 +8,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
-
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterInterface;
 
 /**
  * @Route("/users")
  */
-class CustomParConv
+class CustomParConv implements ParamConverterInterface
 {
     private $repository;
     private $manager;
@@ -22,34 +22,39 @@ class CustomParConv
     private $iValidator;
     private $json;
     private $request;
-    private $body;
+    private $conf;
 
     /**
      * @Route("", methods={"POST"})
      * 
      */
+
+    public function supports(ParamConverter $configuration)
+    {
+    }
+
+    public function apply(Request $request, ParamConverter $configuration)
+    {
+        $this->conf = $configuration;
+    }
+
+
     public function convert(string $type): JsonResponse
     {
-
         $this->request = new Request();
         $this->json = $this->request->getContent();
-        $this->body = json_decode($this->json, true);
 
         if ($type === "user") {
 
             $userRequest = $this->iSerializer->deserialize($this->json, UserRequest::class, 'json');
             $this->iValidator->validate($userRequest);
-
             $userResponse = $this->manager->create($userRequest);
             return new JsonResponse($userResponse, Response::HTTP_CREATED);
         } else if ($type === "post") {
 
             $postRequest = $this->iSerializer->deserialize($this->json, PostRequest::class, 'json');
-
             $this->iValidator->validate($postRequest);
-
             $postResponse = $this->manager->create($postRequest);
-
             return new JsonResponse($postResponse, Response::HTTP_CREATED);
         }
     }
@@ -77,6 +82,7 @@ class CustomParConv
     public function showResultDB(): Response
     {
         $result = $this->repository->findAll();
+        var_dump($this->conf);
         dd($result);
         return new Response();
     }
