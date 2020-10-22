@@ -38,11 +38,6 @@ class CustomParConv
         if ($type === "user") {
 
             $body = json_decode($this->json, true);
-            $userRequest = (new UserRequest())
-                ->setName($body['name'])
-                ->setPassword($body['password'])
-                ->setEmail($body['email']);
-
 
             $userRequest = $this->iSerializer->deserialize($this->json, UserRequest::class, 'json');
             $this->iValidator->validate($userRequest);
@@ -51,9 +46,6 @@ class CustomParConv
 
             return new JsonResponse($userResponse, Response::HTTP_CREATED);
         } else if ($type === "post") {
-
-
-            $postRequest = (new PostRequest())->setContent($this->body['content'])->setTitle($this->body['title']);
 
             $postRequest = $this->iSerializer->deserialize($this->json, PostRequest::class, 'json');
 
