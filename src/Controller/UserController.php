@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 
 /**
@@ -17,9 +17,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class UserController extends AbstractController
 {
+	private $userRepository;
+	private $userManager;
+	private $serializerI;
+	private $validatorI;
 
 	public function __construct(UserRepository $userRepository, UserManager $userManager, SerializerInterface $sI, ValidatorInterface $vI)
 	{
+		$this->userRepository = $userRepository;
+		$this->userManager = $userManager;
+		$this->serializerI = $sI;
+		$this->validatorI = $vI;
 	}
 
 

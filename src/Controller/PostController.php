@@ -18,14 +18,23 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class PostController extends AbstractController
 {
 	private $postRepository;
+	private $postManager;
+	private $serializerI;
+	private $validatorI;
+
 
 	public function __construct(PostRepository $postRepository, PostManager $postManager, SerializerInterface $sI, ValidatorInterface $vI)
 	{
+		$this->postRepository = $postRepository;
+		$this->postManager = $postManager;
+		$this->serializerI = $sI;
+		$this->validatorI = $vI;
 	}
 
 
 	/**
 	 * @Route("", methods={"POST"})
+	 * @ParamConverter()
 	 */
 	public function create()
 	{
@@ -37,7 +46,6 @@ class PostController extends AbstractController
 	 */
 	public function posts(): Response
 	{
-		$this->paramConverter->showResultDB();
 		return new Response();
 	}
 }
