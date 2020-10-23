@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use Plugins\CustomParConv;
 use App\Manager\UserManager;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,15 +17,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class UserController extends AbstractController
 {
-	private $paramConverter;
 
 	public function __construct(UserRepository $userRepository, UserManager $userManager, SerializerInterface $sI, ValidatorInterface $vI)
 	{
-		$this->paramConverter = new CustomParConv();
-		$this->paramConverter->setRepository($userRepository);
-		$this->paramConverter->setManager($userManager);
-		$this->paramConverter->setSerializerI($sI);
-		$this->paramConverter->setValidatorI($vI);
 	}
 
 
@@ -35,7 +28,7 @@ class UserController extends AbstractController
 	 */
 	public function create()
 	{
-		return $this->paramConverter->convert("user");
+		return new Response();
 	}
 
 	/**
@@ -43,7 +36,6 @@ class UserController extends AbstractController
 	 */
 	public function users(): Response
 	{
-		$this->paramConverter->showResultDB();
 		return new Response();
 	}
 }

@@ -22,7 +22,6 @@ class CustomParConv implements ParamConverterInterface
     private $iValidator;
     private $json;
     private $request;
-    private $conf;
 
     public function supports(ParamConverter $configuration)
     {
