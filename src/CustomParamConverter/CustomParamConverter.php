@@ -10,13 +10,13 @@ class CustomParamConverter implements ParamConverterInterface
 {
 	function apply(Request $request, ParamConverter $configuration)
 	{
-		// What should I do here ?:
-		// validate $configuration->getClass e.t.c ?
-		
-		return true;
+		// Только все ниже написанное должно браться из $configuration
+		$userRequest = $this->iSerializer->deserialize($this->json, UserRequest::class, 'json');
+            	$this->iValidator->validate($userRequest);
 	}
 	function supports(ParamConverter $configuration)
 	{
-		// Or validation must be here?
+            	$userResponse = $this->manager->create($userRequest);
+            	return new JsonResponse($userResponse, Response::HTTP_CREATED);
 	}
 }
